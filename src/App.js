@@ -4,8 +4,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import Cart from './components/Cart/Cart';
 import Layout from './components/Layout/Layout';
 import Products from './components/Shop/Products';
-import { fetchCartData, sendCartData } from './store/cartActions'; 
 import Notification from './components/UI/Notification';
+import { sendCartData,fetchCartData } from './store/cartActions'; 
+
 
 let isInitial = true;
 
@@ -15,32 +16,19 @@ function App() {
   const cart = useSelector((state) => state.cart);
   const notification = useSelector((state) => state.ui.notification);
 
-  useEffect(( )=>{
-    dispatch(fetchCartData())
-  },[dispatch])
+  useEffect(() => {
+    dispatch(fetchCartData());
+  }, [dispatch]);
 
   useEffect(() => {
-    // const sendCartData = async () => {
-    //   dispatch(
-    //     uiActions.showNotification({
-    //       status: 'pending',
-    //       title: 'Sending...',
-    //       message: 'Sending cart data!',
-    //     })
-    //   );
-  
-    // };
-
     if (isInitial) {
       isInitial = false;
       return;
     }
-    if (cart.changed) { 
-dispatch(sendCartData(cart));
+
+    if (cart.changed) {
+      dispatch(sendCartData(cart));
     }
-    // sendCartData().catch((error) => {
-    
-    // });
   }, [cart, dispatch]);
 
   return (
